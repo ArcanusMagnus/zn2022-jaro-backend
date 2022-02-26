@@ -11,6 +11,7 @@ export const mongoConnect = async (cb: any): Promise<void> => {
   try {
     const client = await MongoClient.connect(MONGODB_URI);
     _db = client.db();
+    console.log("Connected to db");
     cb();
   } catch (err: any) {
     console.log(err);

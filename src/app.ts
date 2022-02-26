@@ -1,14 +1,21 @@
-// Dependencies
+// External dependencies
 import * as dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
-//
-import { mongoConnect } from "./services/dbConnect";
 
+// My dependecies
+import { mongoConnect } from "./services/dbConnect";
+import services from "./services";
+
+// Routes
+import bandsRoutes from "./routes/bands";
+
+// Declaration and config block
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT ?? "";
+const serviceContainer = services();
 
 // Middleware
 app.use(bodyParser.json());
@@ -24,6 +31,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// Route handling
+app.use("/bands", bandsRoutes(serviceContainer));
+
+// Error handling
+
+// Spin up the server
 mongoConnect(() => {
   app.listen(PORT);
 });
