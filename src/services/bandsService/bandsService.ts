@@ -9,6 +9,9 @@ export default class BandsService {
         .collection("bands")
         .find({})
         .toArray()) as BandsModel[];
+      if (!bands) {
+        throw new Error("Failed to fetch bands");
+      }
       console.log("Got bands from the db");
       return bands;
     } catch (err) {
@@ -32,13 +35,13 @@ export default class BandsService {
   }
 
   async postBand(band: Object): Promise<void> {
-      try {
-        const result = await getDb().collection("bands").insertOne(band);
-        if(!result.acknowledged){
-            throw new Error('Inserting band into the database failed.');
-        }
-      } catch(err){
-        throw new Error(err);
+    try {
+      const result = await getDb().collection("bands").insertOne(band);
+      if (!result.acknowledged) {
+        throw new Error("Inserting band into the database failed.");
       }
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 }

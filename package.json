@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/app.ts",
+    "start": "ts-node-dev src/app.ts",
     "build": "tsc",
     "dev": "ts-node-dev --cache-directory ./.ts-node-dev-cache --transpile-only --watch .env,.env.override --ignore-watch node_modules --poll src/app.ts",
     "debug": "ts-node-dev --transpile-only --watch .env,.env.override,test/.env --ignore-watch node_modules --inspect=0.0.0.0:9229 --poll --respawn src/app.ts"
@@ -13,6 +13,8 @@
   "author": "Jan Majerníček",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.10.0",
+    "ajv-formats": "^2.1.1",
     "body-parser": "^1.19.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",

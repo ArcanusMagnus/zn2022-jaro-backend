@@ -4,9 +4,9 @@ export default interface Band {
     _id: ObjectId;
     name: string;
     genre: string;
-    StartTime: Date;
-    EndTime: Date;
-    Link: string;
+    startTime: Date;
+    endTime: Date;
+    link: string;
     photo: string;
     description: string;
     venue_id: ObjectId;
