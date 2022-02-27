@@ -1,4 +1,4 @@
-import BandsService from "./bandsService/getAllBandsService";
+import BandsService from "./bandsService/bandsService";
 import bandsServiceProvider from "./bandsService";
 
 export interface ServiceContainer {
