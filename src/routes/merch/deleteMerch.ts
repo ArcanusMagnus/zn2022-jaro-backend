@@ -5,8 +5,7 @@ import { ServiceContainer } from "../../services";
 import { Middleware, MiddlewareFunction } from "../abstractRoute";
 
 const validation: MiddlewareFunction = (req, res, next) => {
-  // TODO
-  if (!req.params.bandId || !req.params.bandId.match(/^[0-9a-fA-F]{24}$/)) {
+  if (!req.params.merchId || !req.params.merchId.match(/^[0-9a-fA-F]{24}$/)) {
     const error = new Error("Invalid URL");
     res.status(404);
     throw error;
@@ -14,18 +13,18 @@ const validation: MiddlewareFunction = (req, res, next) => {
   next();
 };
 
-// A lot of shared code, maybe refactor into one route with conditions?
-
 const handler = (serviceContainer: ServiceContainer): Middleware => {
   return async (req: express.Request, res: express.Response) => {
-    const _id = new ObjectId(req.params.bandId);
-    const { bandsService } = serviceContainer;
-    const band = await bandsService.getOneBand(_id);
-    res.status(200).json({ message: "Band fetched successfully", body: band });
+    const _id = new ObjectId(req.params.merchId);
+    const { merchService } = serviceContainer;
+    const band = await merchService.deleteMerch(_id);
+    // now tells success even if item was not found
+    res.status(200).json({ message: "Merchandise item deleted successfully", body: band });
   };
 };
 
 export default (serviceContainer: ServiceContainer, router: Router): Router => {
-  router.get("/:bandId", validation, handler(serviceContainer));
-  return router;
-};
+    router.delete("/:merchId", validation, handler(serviceContainer));
+    return router;
+  };
+  

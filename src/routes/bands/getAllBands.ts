@@ -4,7 +4,7 @@ import { ServiceContainer } from "../../services";
 import { Middleware, MiddlewareFunction } from "../abstractRoute";
 
 const validation: MiddlewareFunction = (req, res, next) => {
-  // TODO
+  // TODO (do I really need validation on a get route?)
   next();
 };
 

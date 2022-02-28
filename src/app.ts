@@ -9,6 +9,7 @@ import services from "./services";
 
 // Routes
 import bandsRoutes from "./routes/bands";
+import merchRoutes from "./routes/merch";
 
 // Declaration and config block
 dotenv.config();
@@ -33,8 +34,9 @@ app.use((req, res, next) => {
 
 // Route handling
 app.use("/bands", bandsRoutes(serviceContainer));
+app.use("/merch", merchRoutes(serviceContainer));
 
-// Error handling
+// TODO: Error handling
 
 // Spin up the server
 mongoConnect(() => {

@@ -3,6 +3,7 @@ import { getDb } from "../dbConnect";
 import { ObjectId } from "mongodb";
 
 export default class BandsService {
+  //add pagination later
   async getAllBands(): Promise<BandsModel[] | undefined> {
     try {
       const bands = (await getDb()
@@ -40,6 +41,14 @@ export default class BandsService {
       if (!result.acknowledged) {
         throw new Error("Inserting band into the database failed.");
       }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async deleteBand(_id: ObjectId): Promise<void> {
+    try {
+      await getDb().collection("bands").deleteOne({ _id: _id });
     } catch (err) {
       throw new Error(err);
     }
