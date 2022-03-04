@@ -5,6 +5,7 @@ import getAllBands from "./getAllBands";
 import getOneBand from "./getOneBand";
 import postBand from "./postBand";
 import deleteBand from "./deleteBand";
+import updateBand from "./updateBand";
 
 export default (services: ServiceContainer): Router => {
     const router = Router();
@@ -13,6 +14,7 @@ export default (services: ServiceContainer): Router => {
     getOneBand(services, router);
     postBand(services, router);
     deleteBand(services, router);
+    updateBand(services, router);
 
     return router;
 }

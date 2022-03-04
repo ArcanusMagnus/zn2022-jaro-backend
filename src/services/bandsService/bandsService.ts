@@ -46,6 +46,26 @@ export default class BandsService {
     }
   }
 
+  async updateBand(_id: ObjectId, band: BandsModel): Promise<void> {
+    try {
+      const result = await getDb()
+        .collection("bands")
+        .findOneAndUpdate(
+          { _id: _id },
+          {
+            $set: {
+              ...band
+            },
+          }
+        );
+      if(!result.ok){
+        throw new Error("Band update failed")
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async deleteBand(_id: ObjectId): Promise<void> {
     try {
       await getDb().collection("bands").deleteOne({ _id: _id });

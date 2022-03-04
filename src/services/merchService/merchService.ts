@@ -32,6 +32,26 @@ export default class MerchService {
     }
   }
 
+  async updateMerch(_id: ObjectId, merch: MerchModel): Promise<void> {
+    try {
+      const result = await getDb()
+        .collection("merch")
+        .findOneAndUpdate(
+          { _id: _id },
+          {
+            $set: {
+              ...merch
+            },
+          }
+        );
+      if(!result.ok){
+        throw new Error("Merch update failed")
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async deleteMerch(_id: ObjectId): Promise<void> {
     try {
       await getDb().collection("merch").deleteOne({ _id: _id });
