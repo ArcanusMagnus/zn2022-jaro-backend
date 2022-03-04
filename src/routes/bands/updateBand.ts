@@ -34,12 +34,22 @@ const validation: MiddlewareFunction = (req, res, next) => {
 // A lot of shared code, maybe refactor into one route with conditions?
 
 const handler = (serviceContainer: ServiceContainer): Middleware => {
-  return async (req: express.Request, res: express.Response) => {
+  return async (
+    req: express.Request,
+    res: express.Response,
+    next: Function
+  ) => {
     const _id = new ObjectId(req.params.bandId);
     const band = req.body;
     const { bandsService } = serviceContainer;
-    const result = await bandsService.updateBand(_id, band);
-    res.status(200).json({ message: "Band updated successfully", body: result });
+    try {
+      const result = await bandsService.updateBand(_id, band);
+      res
+        .status(200)
+        .json({ message: "Band updated successfully", body: result });
+    } catch (err) {
+      next(err);
+    }
   };
 };
 

@@ -10,7 +10,7 @@ import isAuth from "../../middleware/isAuth";
 const ajv = new Ajv();
 const schema: JSONSchemaType<BandsModel> = {
   type: "object",
-  required: ["name", "genre", "startTime"]
+  required: ["name", "genre", "startTime"],
 };
 const validate = ajv.compile(schema);
 
@@ -27,11 +27,19 @@ const validation: MiddlewareFunction = (req, res, next) => {
 };
 
 const handler = (serviceContainer: ServiceContainer): Middleware => {
-  return async (req: express.Request, res: express.Response) => {
+  return async (
+    req: express.Request,
+    res: express.Response,
+    next: Function
+  ) => {
     const band = req.body;
     const { bandsService } = serviceContainer;
-    await bandsService.postBand(band);
-    res.status(201).json({ message: "Band created successfully." });
+    try {
+      await bandsService.postBand(band);
+      res.status(201).json({ message: "Band created successfully." });
+    } catch (err) {
+      next(err);
+    }
   };
 };
 

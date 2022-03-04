@@ -38,10 +38,8 @@ const handler = (serviceContainer: ServiceContainer): Middleware => {
     const _id = new ObjectId(req.params.merchId);
     const merch = req.body;
     const { merchService } = serviceContainer;
-    const result = await merchService.updateMerch(_id, merch);
-    res
-      .status(200)
-      .json({ message: "Merch item updated successfully", body: result });
+    await merchService.updateMerch(_id, merch);
+    res.status(200).json({ message: "Merch item updated successfully" });
   };
 };
 

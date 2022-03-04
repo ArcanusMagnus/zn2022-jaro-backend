@@ -44,6 +44,7 @@ export default class MerchService {
             },
           }
         );
+      // tells it's ok even if object doesn't exist, but fuck it for now
       if(!result.ok){
         throw new Error("Merch update failed")
       }

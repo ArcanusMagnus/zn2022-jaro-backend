@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 // My dependecies
 import { mongoConnect } from "./services/dbConnect";
 import services from "./services";
+import { errorHandler } from "./helpers/errorHandler";
 
 // Routes
 import bandsRoutes from "./routes/bands";
@@ -39,6 +40,7 @@ app.use("/bands", bandsRoutes(serviceContainer));
 app.use("/merch", merchRoutes(serviceContainer));
 
 // TODO: Error handling
+app.use(errorHandler);
 
 // Spin up the server
 mongoConnect(() => {
