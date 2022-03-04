@@ -10,6 +10,7 @@ import services from "./services";
 // Routes
 import bandsRoutes from "./routes/bands";
 import merchRoutes from "./routes/merch";
+import authRoutes from "./routes/auth";
 
 // Declaration and config block
 dotenv.config();
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 });
 
 // Route handling
+app.use("/auth", authRoutes(serviceContainer));
 app.use("/bands", bandsRoutes(serviceContainer));
 app.use("/merch", merchRoutes(serviceContainer));
 

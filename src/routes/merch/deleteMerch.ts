@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 
 import { ServiceContainer } from "../../services";
 import { Middleware, MiddlewareFunction } from "../abstractRoute";
+import isAuth from "../../middleware/isAuth";
 
 const validation: MiddlewareFunction = (req, res, next) => {
   if (!req.params.merchId || !req.params.merchId.match(/^[0-9a-fA-F]{24}$/)) {
@@ -24,7 +25,7 @@ const handler = (serviceContainer: ServiceContainer): Middleware => {
 };
 
 export default (serviceContainer: ServiceContainer, router: Router): Router => {
-    router.delete("/:merchId", validation, handler(serviceContainer));
+    router.delete("/:merchId", isAuth, validation, handler(serviceContainer));
     return router;
   };
   

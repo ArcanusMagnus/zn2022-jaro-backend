@@ -4,6 +4,7 @@ import Ajv, { JSONSchemaType } from "ajv";
 import { ServiceContainer } from "../../services";
 import { Middleware, MiddlewareFunction } from "../abstractRoute";
 import BandsModel from "../../services/bandsService/models/BandsModel";
+import isAuth from "../../middleware/isAuth";
 
 // Might has been moved elsewhere, but it's only actual use will be here. If changes, refactor later.
 const ajv = new Ajv();
@@ -35,6 +36,6 @@ const handler = (serviceContainer: ServiceContainer): Middleware => {
 };
 
 export default (serviceContainer: ServiceContainer, router: Router): Router => {
-  router.post("/", validation, handler(serviceContainer));
+  router.post("/", isAuth, validation, handler(serviceContainer));
   return router;
 };
