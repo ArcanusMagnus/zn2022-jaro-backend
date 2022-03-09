@@ -1,6 +1,0 @@
-runtime: nodejs16
-
-env_variables:
-  MONGODB_URI: "mongodb+srv://zn_jaro_web:bzsSKwV9MvQkY2f3@zndb.dbvtq.mongodb.net/znJaroDatabase?retryWrites=true&w=majority"
-  PORT: 8080
-  JWT_SECRET: "nukeeveryone"
