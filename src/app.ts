@@ -1,3 +1,5 @@
+import path from "path";
+
 // External dependencies
 import * as dotenv from "dotenv";
 import express from "express";
@@ -20,9 +22,6 @@ const app = express();
 const PORT = process.env.PORT ?? "";
 const serviceContainer = services();
 
-// Middleware
-app.use(bodyParser.json());
-
 // Headers
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -33,6 +32,10 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
+// Middleware
+app.use(bodyParser.json());
+app.use('/images', express.static(path.join(__dirname, 'images').replace(/\\/g,'/')));
 
 // Route handling
 app.use("/auth", authRoutes(serviceContainer));

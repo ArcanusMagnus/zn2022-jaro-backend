@@ -1,4 +1,5 @@
 import BandsModel from "./models/BandsModel";
+import VenuesModel from "./models/VenuesModel";
 import { getDb } from "../dbConnect";
 import { ObjectId } from "mongodb";
 
@@ -6,13 +7,29 @@ export default class BandsService {
   //add pagination later
   async getAllBands(): Promise<BandsModel[] | undefined> {
     try {
-      const bands = (await getDb()
+      const dbBands = (await getDb()
         .collection("bands")
         .find({})
         .toArray()) as BandsModel[];
-      if (!bands) {
+      if (!dbBands) {
         throw new Error("Failed to fetch bands");
       }
+
+      const bands: BandsModel[] = [];
+      for (const band of dbBands) {
+        const venue = await getDb()
+          .collection("venues")
+          .findOne({ _id: band.venue_id }) as VenuesModel;
+        if (!venue) {
+          throw new Error("Venue not found");
+        }
+        bands.push({
+          ...band,
+          venue: venue.name,
+          venue_no: venue.order,
+        });
+      }
+
       console.log("Got bands from the db");
       return bands;
     } catch (err) {
@@ -54,12 +71,12 @@ export default class BandsService {
           { _id: _id },
           {
             $set: {
-              ...band
+              ...band,
             },
           }
         );
-      if(!result.ok){
-        throw new Error("Band update failed")
+      if (!result.ok) {
+        throw new Error("Band update failed");
       }
     } catch (err) {
       throw new Error(err);

@@ -1,5 +1,7 @@
 import { ObjectId } from "mongodb";
 
+import path from "path";
+
 import MerchModel from "./models/MerchModel";
 import { getDb } from "../dbConnect";
 
@@ -15,7 +17,12 @@ export default class MerchService {
         throw new Error("Failed to fetch merch");
       }
       console.log("Got merch from the db");
-      return merch;
+
+      const pathBase = path.join(__dirname, "..", "..", "images");
+      const modifiedMerch = merch.map((item) => {
+        return { ...item, photo: path.join(pathBase, item.photo).replace(/\\/g,'/') };
+      });
+      return modifiedMerch;
     } catch (err) {
       throw new Error(err);
     }
@@ -40,13 +47,13 @@ export default class MerchService {
           { _id: _id },
           {
             $set: {
-              ...merch
+              ...merch,
             },
           }
         );
       // tells it's ok even if object doesn't exist, but fuck it for now
-      if(!result.ok){
-        throw new Error("Merch update failed")
+      if (!result.ok) {
+        throw new Error("Merch update failed");
       }
     } catch (err) {
       throw new Error(err);
