@@ -18,11 +18,11 @@ export default class MerchService {
       }
       console.log("Got merch from the db");
 
-      const pathBase = path.join(__dirname, "..", "..", "images");
-      const modifiedMerch = merch.map((item) => {
-        return { ...item, photo: path.join(pathBase, item.photo).replace(/\\/g,'/') };
-      });
-      return modifiedMerch;
+      // const pathBase = path.join(__dirname, "..", "..", "images");
+      // const modifiedMerch = merch.map((item) => {
+      //   return { ...item, photo: path.join(pathBase, item.photo).replace(/\\/g,'/') };
+      // });
+      return merch;
     } catch (err) {
       throw new Error(err);
     }

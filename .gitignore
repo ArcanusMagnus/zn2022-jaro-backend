@@ -3,3 +3,6 @@ dist
 
 .ts-node-dev-cache
 .env
+app.yaml
+
+src/.well-known
